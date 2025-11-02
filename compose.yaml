@@ -1,0 +1,15 @@
+﻿services:
+  bd:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    ports:
+      - 14443:1433
+    
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "@dem!ro123"
+      
+      
+    volumes:
+      -  ./data-sql-server:/var/op/mssql
+      
+
