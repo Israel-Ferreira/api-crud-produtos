@@ -9,4 +9,6 @@ public interface ICategoriaRepository
     Task Add(Categoria item);
     Task Delete(Categoria item);
     
+    Task Update(Categoria item);
+    
 }

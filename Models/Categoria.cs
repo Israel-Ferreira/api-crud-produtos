@@ -8,4 +8,12 @@ public class Categoria
     public DateTime CriadoEm { get; set; } = DateTime.Now;
     
     public virtual ICollection<Produto>  Produtos { get; set; } = new List<Produto>();
+    
+    
+    public Categoria(){}
+
+    public Categoria(string nome)
+    {
+        Nome = nome;
+    }
 }

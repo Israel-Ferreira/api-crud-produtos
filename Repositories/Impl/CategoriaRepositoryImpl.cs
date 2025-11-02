@@ -36,4 +36,11 @@ public class CategoriaRepositoryImpl : ICategoriaRepository
         _dbContext.Categorias.Remove(item);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task Update(Categoria item)
+    {
+        _dbContext.Categorias.Update(item);
+        await _dbContext.SaveChangesAsync();
+        
+    }
 }

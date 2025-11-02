@@ -1,8 +1,9 @@
 ﻿using ApiCrudProdutos.Dtos;
+using ApiCrudProdutos.Exceptions;
 using ApiCrudProdutos.Models;
 using ApiCrudProdutos.Repositories;
 
-namespace ApiCrudProdutos.Services;
+namespace ApiCrudProdutos.Services.Impl;
 
 public class CategoriaServiceImpl : ICategoriaService
 {
@@ -26,21 +27,54 @@ public class CategoriaServiceImpl : ICategoriaService
 
     public Categoria? GetById(int id)
     {
-        throw new NotImplementedException();
+        var  categoria = _categoriaRepository.GetById(id);
+
+        if (categoria == null)
+        {
+            string msg = $"Categoria com id {id} não encontrada";
+            throw new NotFoundException(msg);
+        }
+        
+        
+        return categoria;
     }
 
-    public Task<bool> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        var categoria = _categoriaRepository.GetById(id);
+
+        if (categoria == null)
+        {
+            string msg = $"Categoria com id {id} não encontrada";
+            throw new NotFoundException(msg);
+        }
+        
+        await _categoriaRepository.Delete(categoria);
+        return true;
     }
 
-    public Task Add(CategoriaDTO categoria)
+    public async Task Add(CategoriaDTO categoria)
     {
-        throw new NotImplementedException();
+        if (categoria.Nome == "")
+        {
+            throw new BadRequestException();
+        }
+        
+        Categoria categoriaEntity = new Categoria(categoria.Nome);
+        await _categoriaRepository.Add(categoriaEntity);
     }
 
-    public Task Update(int id, CategoriaDTO categoria)
+    public async Task Update(int id, CategoriaDTO categoria)
     {
-        throw new NotImplementedException();
+        var categoriaEntity = _categoriaRepository.GetById(id);
+
+        if (categoriaEntity == null)
+        {
+            string msg = $"Categoria com id {id} não encontrada";
+            throw new NotFoundException(msg);
+        }
+        
+        categoriaEntity.Nome = categoria.Nome;
+        await _categoriaRepository.Update(categoriaEntity);
     }
 }
