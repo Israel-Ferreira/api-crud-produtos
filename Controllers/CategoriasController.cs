@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApiCrudProdutos.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApiCrudProdutos.Controllers;
 
@@ -21,7 +22,7 @@ public class CategoriasController : ControllerBase
     
     
     [HttpPost]
-    public Task<IActionResult> Add()
+    public Task<IActionResult> Add([FromBody] CategoriaDTO categoria)
     {
         return Task.FromResult<IActionResult>(Created());
     }

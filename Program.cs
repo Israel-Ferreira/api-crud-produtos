@@ -1,4 +1,6 @@
 using ApiCrudProdutos.Db;
+using ApiCrudProdutos.Repositories;
+using ApiCrudProdutos.Repositories.Impl;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,11 @@ builder.Services.AddDbContext<ApiCrudDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Database"),
         b => b.MigrationsAssembly("ApiCrudProdutos")));
+
+
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepositoryImpl>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepositoryImpl>();
+
 
 var app = builder.Build();
 

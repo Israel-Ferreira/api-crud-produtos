@@ -7,6 +7,8 @@ public class ApiCrudDbContext(DbContextOptions<ApiCrudDbContext> options) : DbCo
 {
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Produto> Produtos { get; set; }
+    
+    public DbSet<Estoque> Estoques { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
