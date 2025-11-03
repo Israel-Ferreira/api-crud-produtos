@@ -1,4 +1,6 @@
-﻿namespace ApiCrudProdutos.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace ApiCrudProdutos.Models;
 
 public class Categoria
 {
@@ -7,6 +9,7 @@ public class Categoria
     
     public DateTime CriadoEm { get; set; } = DateTime.Now;
     
+    [JsonIgnore]
     public virtual ICollection<Produto>  Produtos { get; set; } = new List<Produto>();
     
     

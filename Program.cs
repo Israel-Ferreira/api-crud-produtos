@@ -1,13 +1,18 @@
+using System.Text.Json.Serialization;
 using ApiCrudProdutos.Db;
 using ApiCrudProdutos.Repositories;
 using ApiCrudProdutos.Repositories.Impl;
 using ApiCrudProdutos.Services;
 using ApiCrudProdutos.Services.Impl;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -24,8 +29,14 @@ builder.Services.AddDbContext<ApiCrudDbContext>(options =>
 
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepositoryImpl>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepositoryImpl>();
+builder.Services.AddScoped<IEstoqueRepository, EstoqueRepositoryImpl>();
+
+
+
+
 
 builder.Services.AddScoped<ICategoriaService, CategoriaServiceImpl>();
+builder.Services.AddScoped<IProdutoService, ProdutoServiceImpl>();
 
 
 var app = builder.Build();

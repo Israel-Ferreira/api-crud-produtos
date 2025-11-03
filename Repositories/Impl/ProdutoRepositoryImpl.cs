@@ -1,5 +1,6 @@
 ﻿using ApiCrudProdutos.Db;
 using ApiCrudProdutos.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiCrudProdutos.Repositories.Impl;
 
@@ -17,7 +18,9 @@ public class ProdutoRepositoryImpl : IProdutoRepository
     
     public IEnumerable<Produto> GetAll()
     {
-        return _context.Produtos.OrderBy(p => p.DataCadastro);
+        return _context.Produtos.OrderBy(p => p.DataCadastro)
+            .Include(produto => produto.Categoria)
+            .ToList();
     }
 
     public Produto? GetById(int id)
@@ -27,7 +30,11 @@ public class ProdutoRepositoryImpl : IProdutoRepository
 
     public Produto? GetBySku(string sku)
     {
-        return _context.Produtos.FirstOrDefault(p => p.Sku == sku);
+        return _context.Produtos
+            .Include(produto => produto.Categoria)
+            .Include(produto => produto.Estoques)
+            .FirstOrDefault(p => p.Sku == sku);
+
     }
 
     public async Task Add(Produto produto)

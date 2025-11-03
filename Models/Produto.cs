@@ -14,4 +14,18 @@ public class Produto
     public bool Ativo { get; set; } = true;
     public DateTime DataCadastro { get; set; } = DateTime.Now;
     
+    public virtual ICollection<Estoque> Estoques { get; set; }
+
+    
+    
+    
+    public Produto(){}
+
+
+    public Produto(string nome, string descricao, string sku)
+    {
+        Nome = nome;
+        Sku = sku;
+        Descricao = descricao;
+    }
 }
